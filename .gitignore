@@ -6,3 +6,15 @@ Videos/*.MP4
 *.tmp
 *.pyc
 __pycache__/
+
+# Ignore virtual environment folders
+venv/
+.env/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
