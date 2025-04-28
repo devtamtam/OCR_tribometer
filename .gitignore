@@ -1,0 +1,8 @@
+# Ignore MP4 video files in the Videos directory
+Videos/*.mp4
+Videos/*.MP4
+# Ignore other common files
+*.log
+*.tmp
+*.pyc
+__pycache__/
