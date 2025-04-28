@@ -6,7 +6,7 @@ This project extracts numbers from video frames using OCR (Optical Character Rec
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/devtamtam/OCR_tribometer.git
    cd OCR_from_mp4
    ```
 
