@@ -2,8 +2,9 @@ import cv2
 import pytesseract
 import json
 
-# Function to extract numbers from video frames
-def extract_numbers_from_video(video_path, config_path):
+def play_video_and_extract(video_path, config_path):
+    cap = cv2.VideoCapture(video_path)
+
     # Load ROI configuration from JSON file
     with open(config_path, 'r') as json_file:
         roi_config = json.load(json_file)
@@ -13,13 +14,15 @@ def extract_numbers_from_video(video_path, config_path):
     left = roi_config["left"]
     right = roi_config["right"]
 
-    cap = cv2.VideoCapture(video_path)
     previous_number = None
 
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
             break
+
+        # Display the video frame
+        cv2.imshow('Video Playback', frame)
 
         # Crop the frame to the specified region of interest (ROI)
         roi_frame = frame[top:bottom, left:right]
@@ -37,11 +40,19 @@ def extract_numbers_from_video(video_path, config_path):
             print(f"Detected number: {numbers}")
             previous_number = numbers
 
+        # Exit playback if 'q' is pressed
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
     cap.release()
+    cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-    video_path = "./Videos/IOHD0085.MP4"  # Replace with your video path
+    # Load video path from config.json
+    with open("config.json", "r") as config_file:
+        config = json.load(config_file)
+    video_path = config["video_path"]  # Path to the video file
     config_path = "roi_config.json"  # Path to the JSON file with ROI configuration
 
-    # Run the OCR extraction
-    extract_numbers_from_video(video_path, config_path)
+    # Run video playback and OCR extraction in real-time
+    play_video_and_extract(video_path, config_path)
